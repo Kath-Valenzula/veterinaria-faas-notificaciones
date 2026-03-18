@@ -3,127 +3,650 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veterinaria Cloud Native - Demo</title>
+  <title>Clínica Veterinaria Chicureo</title>
   <style>
-    :root {
-      --bg1: #f4fbf7;
-      --bg2: #d2efe2;
-      --surface: #ffffff;
-      --ink: #1f2a2a;
-      --accent: #0b7f6d;
-      --accent-soft: #c3efe6;
-      --danger: #c03546;
-    }
-
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--ink);
-      background: radial-gradient(circle at 20% 10%, var(--bg1), var(--bg2));
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #f7f8fa;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      gap: 16px;
+    /* ── Card ── */
+    .booking-card {
+      display: flex;
+      width: 100%;
+      max-width: 920px;
+      min-height: 580px;
+      background: #fff;
+      border: 1px solid #e4e4e7;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,.10);
+      overflow: hidden;
     }
 
-    .card {
-      background: var(--surface);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(11, 127, 109, 0.12);
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 272px;
+      flex-shrink: 0;
+      border-right: 1px solid #e4e4e7;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
     }
 
-    h1 { margin-top: 0; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+    .logo-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    label {
-      display: block;
+    .logo-icon { width: 54px; height: 54px; flex-shrink: 0; }
+
+    .logo-text {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #1a3a6b;
+      line-height: 1.3;
+      letter-spacing: .4px;
+    }
+
+    .logo-mini { width: 46px; height: 46px; margin-bottom: 10px; }
+
+    .sidebar-clinic-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .sidebar-title {
+      font-size: 21px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .sidebar-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      color: #555;
+      margin-bottom: 9px;
+    }
+
+    .sidebar-meta svg { width: 15px; height: 15px; flex-shrink: 0; color: #999; }
+
+    .sidebar-desc {
+      font-size: 13.5px;
+      color: #333;
+      line-height: 1.55;
+      margin-top: 12px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 20px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-footer a {
+      font-size: 11.5px;
+      color: #0069ff;
+      text-decoration: none;
+    }
+
+    .sidebar-footer a:hover { text-decoration: underline; }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      padding: 28px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal ribbon */
+    .badge-wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 108px;
+      height: 108px;
+      overflow: hidden;
+    }
+
+    .badge-wrap span {
+      position: absolute;
+      top: 22px;
+      right: -28px;
+      width: 140px;
+      background: #1a3a6b;
+      color: #fff;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      text-align: center;
+      padding: 7px 0;
+      transform: rotate(45deg);
+      transform-origin: center;
+      line-height: 1.5;
+    }
+
+    /* ── Step system ── */
+    .step { display: block; }
+    .step.hidden { display: none; }
+
+    .main-title {
+      font-size: 19px;
       font-weight: 600;
+      color: #111;
+      margin-bottom: 22px;
+    }
+
+    /* ── Calendar layout ── */
+    .calendar-layout {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .calendar-panel { flex: 1; min-width: 0; }
+
+    /* Nav */
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .cal-nav button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #0069ff;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+    }
+
+    .cal-nav button:hover { background: #e8f0fe; }
+
+    .cal-nav-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      min-width: 130px;
+      text-align: center;
+    }
+
+    /* Day-of-week header */
+    .cal-days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
       margin-bottom: 6px;
     }
 
-    input {
-      width: 100%;
-      border: 1px solid #c8dfd8;
-      border-radius: 10px;
-      padding: 10px;
-    }
-
-    button {
-      margin-top: 12px;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      cursor: pointer;
+    .cal-days-header span {
+      font-size: 10.5px;
       font-weight: 700;
-      background: var(--accent);
-      color: white;
+      color: #999;
+      padding: 3px 0;
     }
 
-    .danger { background: var(--danger); }
+    /* Grid */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
 
+    .cal-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+    }
+
+    .cal-day {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13.5px;
+      cursor: default;
+      transition: all .15s;
+    }
+
+    .cal-day.past    { color: #ccc; }
+
+    .cal-day.available {
+      background: #deeaff;
+      color: #0069ff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cal-day.available:hover,
+    .cal-day.selected {
+      background: #0069ff;
+      color: #fff;
+    }
+
+    .cal-day.today {
+      background: #1a3a6b;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Timezone */
+    .timezone {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    /* ── Time panel ── */
+    .time-panel { width: 198px; flex-shrink: 0; display: none; }
+    .time-panel.visible { display: block; }
+
+    .time-panel-date {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .time-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .time-slot {
+      border: 1.5px solid #0069ff;
+      border-radius: 6px;
+      background: #fff;
+      color: #0069ff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 11px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .time-slot:hover,
+    .time-slot.selected { background: #0069ff; color: #fff; }
+
+    /* ── Step 2: Form ── */
+    .selection-summary {
+      background: #f0f6ff;
+      border-radius: 8px;
+      padding: 11px 16px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      color: #444;
+    }
+
+    .selection-summary strong { color: #0069ff; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .form-field input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      outline: none;
+      transition: border .15s;
+    }
+
+    .form-field input:focus { border-color: #0069ff; }
+    .form-field.full { grid-column: 1 / -1; }
+
+    /* Buttons */
+    .btn-back {
+      background: none;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #555;
+      margin-right: 8px;
+    }
+
+    .btn-back:hover { border-color: #aaa; }
+
+    .btn-submit {
+      background: #0069ff;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 22px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      transition: background .15s;
+    }
+
+    .btn-submit:hover { background: #0054cc; }
+
+    .btn-list {
+      background: none;
+      border: 1.5px solid #e4e4e7;
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #999;
+      margin-left: 8px;
+    }
+
+    .btn-list:hover { border-color: #bbb; color: #555; }
+
+    /* Output */
     pre {
-      margin: 0;
+      margin-top: 18px;
       background: #0f172a;
       color: #d7e3ff;
-      padding: 12px;
+      padding: 13px;
       border-radius: 10px;
       overflow-x: auto;
-      min-height: 90px;
+      font-size: 12px;
+      display: none;
     }
+
+    pre.visible { display: block; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Veterinaria - Frontend Demo</h1>
-      <p>Este frontend simula peticiones del dueno de mascota/personal al BFF.</p>
-      <p><strong>Token simulado requerido:</strong> demo-token (header X-Auth-Token)</p>
+<div class="booking-card">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="logo-main">
+      <svg class="logo-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="28" stroke="#1a3a6b" stroke-width="1.8"/>
+        <polyline points="3,32 12,32 16,21 21,41 25,27 29,33 38,33" stroke="#1a3a6b" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M38 20 C39 17 43 16 45 18 C47 20 46 24 44 24 L41 24 C42 27 42 31 41 34 L37 34 C37 31 36 28 34 27 C32 28 31 31 31 34 L27 34 C27 30 29 26 32 24 C34 23 36 22 38 20Z" fill="#1a3a6b"/>
+      </svg>
+      <div class="logo-text">CLÍNICA<br>VETERINARIA<br>CHICUREO</div>
     </div>
 
-    <div class="card">
-      <h2>Crear Cita</h2>
-      <div class="grid">
-        <div>
-          <label for="cliente">Cliente</label>
-          <input id="cliente" value="Ana Perez" />
+    <svg class="logo-mini" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 36 C7 36 9 18 19 16 C25 15 27 21 23 25 C19 29 21 36 27 36" stroke="#1a3a6b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <line x1="25" y1="13" x2="25" y2="38" stroke="#1a3a6b" stroke-width="1.4"/>
+      <path d="M27 17 C27 17 33 17 37 20 C39 21.5 39 25 37 26 C35 27 31 27 31 27 C31 27 39 31 37 37" stroke="#1a3a6b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <p class="sidebar-clinic-name">CLINICA VETETERINARIA CHICUREO</p>
+    <h1 class="sidebar-title">Agenda la próxima cita</h1>
+
+    <div class="sidebar-meta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      30 min
+    </div>
+
+    <div class="sidebar-meta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      Clinica Veterinaria Chicureo
+    </div>
+
+    <p class="sidebar-desc">Gracias por confiarnos lo que más quieres.</p>
+    <p class="sidebar-desc" style="margin-top:8px;font-size:12.5px;color:#888">Y recuerda que siempre estaremos disponibles para atenderte.</p>
+
+    <footer class="sidebar-footer">
+      <a href="#">Configuración de cookies</a>
+      <a href="#">Política de privacidad</a>
+    </footer>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+
+    <!-- Badge diagonal -->
+    <div class="badge-wrap">
+      <span>DESARROLLADO POR<br>Calendly</span>
+    </div>
+
+    <!-- STEP 1: Selección de fecha y hora -->
+    <div class="step" id="step-datetime">
+      <h2 class="main-title">Selecciona una fecha y hora</h2>
+      <div class="calendar-layout">
+
+        <!-- Calendario -->
+        <div class="calendar-panel">
+          <div class="cal-nav">
+            <button id="prevMonth">&#8249;</button>
+            <span class="cal-nav-label" id="monthLabel"></span>
+            <button id="nextMonth">&#8250;</button>
+          </div>
+          <div class="cal-days-header">
+            <span>DOM.</span><span>LUN.</span><span>MAR.</span>
+            <span>MIÉ.</span><span>JUE.</span><span>VIE.</span><span>SÁB.</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="timezone">
+            🌐&nbsp; Santiago (<span id="currentTime">--:--</span>) ▾
+          </div>
         </div>
-        <div>
-          <label for="mascota">Mascota</label>
-          <input id="mascota" value="Firulais" />
-        </div>
-        <div>
-          <label for="fechaHora">Fecha Hora (ISO)</label>
-          <input id="fechaHora" value="2026-03-20T10:00:00" />
-        </div>
-        <div>
-          <label for="motivo">Motivo</label>
-          <input id="motivo" value="Vacunacion anual" />
+
+        <!-- Horarios -->
+        <div class="time-panel" id="timePanel">
+          <p class="time-panel-date" id="selectedDateLabel"></p>
+          <div class="time-slots" id="timeSlots"></div>
         </div>
       </div>
-      <button id="btnCrearCita">Crear cita (BFF)</button>
-      <button id="btnConfirmarCita">Confirmar cita ID 1 (dispara FaaS)</button>
-      <button class="danger" id="btnListarCitas">Listar citas</button>
     </div>
 
-    <div class="card">
-      <h2>Salida</h2>
-      <pre id="salida"></pre>
+    <!-- STEP 2: Datos del cliente -->
+    <div class="step hidden" id="step-form">
+      <h2 class="main-title">Completa tus datos</h2>
+      <div class="selection-summary" id="selectionSummary"></div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="cliente">Nombre del cliente</label>
+          <input id="cliente" type="text" placeholder="Ej: Ana Pérez" value="Ana Perez" />
+        </div>
+        <div class="form-field">
+          <label for="mascota">Nombre de la mascota</label>
+          <input id="mascota" type="text" placeholder="Ej: Firulais" value="Firulais" />
+        </div>
+        <div class="form-field full">
+          <label for="motivo">Motivo de la consulta</label>
+          <input id="motivo" type="text" placeholder="Ej: Vacunación anual" value="Vacunacion anual" />
+        </div>
+      </div>
+      <div>
+        <button class="btn-back" id="btnBack">← Volver</button>
+        <button class="btn-submit" id="btnCrearCita">Confirmar cita</button>
+        <button class="btn-list" id="btnListarCitas">Ver citas</button>
+      </div>
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <pre id="salida"></pre>
+  </main>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const DAYS   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const TIMES  = ['11:00','13:00','15:00','17:00','19:00'];
+
+  const today = new Date();
+  let viewYear  = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selDate   = null;
+  let selTime   = null;
+
+  /* Reloj */
+  function tick() {
+    const n = new Date();
+    document.getElementById('currentTime').textContent =
+      String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 30000);
+
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* Renderiza el calendario */
+  function renderCalendar() {
+    document.getElementById('monthLabel').textContent =
+      cap(MONTHS[viewMonth]) + ' ' + viewYear;
+
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    const firstDay   = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    /* Celdas vacías al inicio */
+    for (let i = 0; i < firstDay; i++) {
+      grid.appendChild(Object.assign(document.createElement('div'), { className: 'cal-cell' }));
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(viewYear, viewMonth, d);
+      const isPast     = date < todayMidnight;
+      const isToday    = date.toDateString() === today.toDateString();
+      const isSelected = selDate && date.toDateString() === selDate.toDateString();
+
+      const dayEl = document.createElement('div');
+      dayEl.className = 'cal-day';
+      dayEl.textContent = d;
+
+      if (isPast && !isToday)     dayEl.classList.add('past');
+      else if (isSelected)        dayEl.classList.add('selected');
+      else if (isToday)           dayEl.classList.add('today');
+      else                        dayEl.classList.add('available');
+
+      if (!isPast || isToday) dayEl.addEventListener('click', () => pickDate(date));
+
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell';
+      cell.appendChild(dayEl);
+      grid.appendChild(cell);
+    }
+  }
+
+  function pickDate(date) {
+    selDate = date;
+    selTime = null;
+    renderCalendar();
+
+    const panel = document.getElementById('timePanel');
+    panel.classList.add('visible');
+    document.getElementById('selectedDateLabel').textContent =
+      cap(DAYS[date.getDay()]) + ', ' + date.getDate() + ' de ' + MONTHS[date.getMonth()];
+
+    const slots = document.getElementById('timeSlots');
+    slots.innerHTML = '';
+    TIMES.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'time-slot';
+      btn.textContent = t;
+      btn.addEventListener('click', () => pickTime(t, btn));
+      slots.appendChild(btn);
+    });
+  }
+
+  function pickTime(time, btn) {
+    selTime = time;
+    document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    setTimeout(goStep2, 280);
+  }
+
+  function goStep2() {
+    document.getElementById('step-datetime').classList.add('hidden');
+    document.getElementById('step-form').classList.remove('hidden');
+
+    const label = cap(DAYS[selDate.getDay()]) + ', ' + selDate.getDate() +
+                  ' de ' + MONTHS[selDate.getMonth()] + ' · ' + selTime;
+    document.getElementById('selectionSummary').innerHTML =
+      '📅 <strong>' + label + '</strong>&emsp;⏱ 30 min';
+
+    const [h, m] = selTime.split(':');
+    window._fechaHora = viewYear + '-' +
+      String(viewMonth + 1).padStart(2,'0') + '-' +
+      String(selDate.getDate()).padStart(2,'0') + 'T' + h + ':' + m + ':00';
+  }
+
+  document.getElementById('btnBack').addEventListener('click', () => {
+    document.getElementById('step-form').classList.add('hidden');
+    document.getElementById('step-datetime').classList.remove('hidden');
+    const s = document.getElementById('salida');
+    s.classList.remove('visible'); s.textContent = '';
+  });
+
+  document.getElementById('prevMonth').addEventListener('click', () => {
+    if (viewMonth === 0) { viewMonth = 11; viewYear--; } else viewMonth--;
+    clearTimePanel();
+  });
+
+  document.getElementById('nextMonth').addEventListener('click', () => {
+    if (viewMonth === 11) { viewMonth = 0; viewYear++; } else viewMonth++;
+    clearTimePanel();
+  });
+
+  function clearTimePanel() {
+    selDate = null; selTime = null;
+    document.getElementById('timePanel').classList.remove('visible');
+    renderCalendar();
+  }
+
+  renderCalendar();
+</script>
 </body>
 </html>
