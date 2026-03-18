@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veterinaria Cloud Native - Demo</title>
+  <style>
+    :root {
+      --bg1: #f4fbf7;
+      --bg2: #d2efe2;
+      --surface: #ffffff;
+      --ink: #1f2a2a;
+      --accent: #0b7f6d;
+      --accent-soft: #c3efe6;
+      --danger: #c03546;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 10%, var(--bg1), var(--bg2));
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(11, 127, 109, 0.12);
+    }
+
+    h1 { margin-top: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid #c8dfd8;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    button {
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      background: var(--accent);
+      color: white;
+    }
+
+    .danger { background: var(--danger); }
+
+    pre {
+      margin: 0;
+      background: #0f172a;
+      color: #d7e3ff;
+      padding: 12px;
+      border-radius: 10px;
+      overflow-x: auto;
+      min-height: 90px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Veterinaria - Frontend Demo</h1>
+      <p>Este frontend simula peticiones del dueno de mascota/personal al BFF.</p>
+      <p><strong>Token simulado requerido:</strong> demo-token (header X-Auth-Token)</p>
+    </div>
+
+    <div class="card">
+      <h2>Crear Cita</h2>
+      <div class="grid">
+        <div>
+          <label for="cliente">Cliente</label>
+          <input id="cliente" value="Ana Perez" />
+        </div>
+        <div>
+          <label for="mascota">Mascota</label>
+          <input id="mascota" value="Firulais" />
+        </div>
+        <div>
+          <label for="fechaHora">Fecha Hora (ISO)</label>
+          <input id="fechaHora" value="2026-03-20T10:00:00" />
+        </div>
+        <div>
+          <label for="motivo">Motivo</label>
+          <input id="motivo" value="Vacunacion anual" />
+        </div>
+      </div>
+      <button id="btnCrearCita">Crear cita (BFF)</button>
+      <button id="btnConfirmarCita">Confirmar cita ID 1 (dispara FaaS)</button>
+      <button class="danger" id="btnListarCitas">Listar citas</button>
+    </div>
+
+    <div class="card">
+      <h2>Salida</h2>
+      <pre id="salida"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
