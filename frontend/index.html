@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clínica Veterinaria Chicureo</title>
+  <title>Veterinaria Isla Negra</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -119,29 +119,10 @@
     }
 
     /* Diagonal ribbon */
-    .badge-wrap {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 108px;
-      height: 108px;
-      overflow: hidden;
-    }
+    .badge-wrap { display: none; }
 
     .badge-wrap span {
-      position: absolute;
-      top: 22px;
-      right: -28px;
-      width: 140px;
-      background: #1a3a6b;
-      color: #fff;
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: .4px;
-      text-align: center;
-      padding: 7px 0;
-      transform: rotate(45deg);
-      transform-origin: center;
+      display: none;
       line-height: 1.5;
     }
 
@@ -415,7 +396,7 @@
         <polyline points="3,32 12,32 16,21 21,41 25,27 29,33 38,33" stroke="#1a3a6b" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M38 20 C39 17 43 16 45 18 C47 20 46 24 44 24 L41 24 C42 27 42 31 41 34 L37 34 C37 31 36 28 34 27 C32 28 31 31 31 34 L27 34 C27 30 29 26 32 24 C34 23 36 22 38 20Z" fill="#1a3a6b"/>
       </svg>
-      <div class="logo-text">CLÍNICA<br>VETERINARIA<br>CHICUREO</div>
+      <div class="logo-text">VETERINARIA<br>ISLA NEGRA</div>
     </div>
 
     <svg class="logo-mini" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -424,7 +405,7 @@
       <path d="M27 17 C27 17 33 17 37 20 C39 21.5 39 25 37 26 C35 27 31 27 31 27 C31 27 39 31 37 37" stroke="#1a3a6b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
     </svg>
 
-    <p class="sidebar-clinic-name">CLINICA VETETERINARIA CHICUREO</p>
+    <p class="sidebar-clinic-name">VETERINARIA ISLA NEGRA</p>
     <h1 class="sidebar-title">Agenda la próxima cita</h1>
 
     <div class="sidebar-meta">
@@ -438,7 +419,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
       </svg>
-      Clinica Veterinaria Chicureo
+      Veterinaria Isla Negra
     </div>
 
     <p class="sidebar-desc">Gracias por confiarnos lo que más quieres.</p>
@@ -452,11 +433,6 @@
 
   <!-- ── Main ── -->
   <main class="main">
-
-    <!-- Badge diagonal -->
-    <div class="badge-wrap">
-      <span>DESARROLLADO POR<br>Calendly</span>
-    </div>
 
     <!-- STEP 1: Selección de fecha y hora -->
     <div class="step" id="step-datetime">
