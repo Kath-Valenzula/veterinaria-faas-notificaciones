@@ -68,8 +68,12 @@ public class CitaService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(faasUrl, request, String.class);
-        LOGGER.info("Notificacion enviada a FaaS. Status: {}", response.getStatusCode());
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(faasUrl, request, String.class);
+            LOGGER.info("Notificacion enviada a FaaS. Status: {}", response.getStatusCode());
+        } catch (Exception ex) {
+            LOGGER.warn("No se pudo enviar notificacion a FaaS (cita confirmada de todos modos): {}", ex.getMessage());
+        }
         return guardada;
     }
 
