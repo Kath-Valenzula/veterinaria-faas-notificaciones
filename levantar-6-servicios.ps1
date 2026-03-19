@@ -5,8 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 
 $root = "C:\Users\kathe\Downloads\cloud_ii\veterinaria-faas-notificaciones"
-$javaHome = "C:\Program Files\Eclipse Adoptium\jdk-17.0.18.8-hotspot"
-$mavenBin = "C:\Users\kathe\tools\apache-maven-3.9.9\bin"
+$javaHome = "C:\Users\kathe\.jdk\jdk-21.0.8"
+$mavenBin = "C:\Users\kathe\.maven\apache-maven-3.9.14\bin"
 $funcBin = "C:\Program Files\Microsoft\Azure Functions Core Tools"
 
 if (-not (Test-Path $root)) {
@@ -17,9 +17,6 @@ if (-not (Test-Path $javaHome)) {
 }
 if (-not (Test-Path $mavenBin)) {
     throw "No existe Maven esperado: $mavenBin"
-}
-if (-not (Test-Path $funcBin)) {
-    throw "No existe Azure Functions Core Tools esperado: $funcBin"
 }
 
 $services = @(
