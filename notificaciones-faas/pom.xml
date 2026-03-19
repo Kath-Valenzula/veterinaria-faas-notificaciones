@@ -14,7 +14,7 @@
         <azure.functions.maven.plugin.version>1.36.0</azure.functions.maven.plugin.version>
         <azure.functions.java.library.version>3.1.0</azure.functions.java.library.version>
         <jackson.version>2.17.2</jackson.version>
-        <functionAppName>notificaciones-faas-local</functionAppName>
+        <functionAppName>vet-notificaciones-kath-2026</functionAppName>
     </properties>
 
     <dependencies>
@@ -48,8 +48,8 @@
                 <version>${azure.functions.maven.plugin.version}</version>
                 <configuration>
                     <appName>${functionAppName}</appName>
-                    <resourceGroup>java-functions-group</resourceGroup>
-                    <region>westeurope</region>
+                    <resourceGroup>rg-vet-notificaciones</resourceGroup>
+                    <region>eastus</region>
                     <runtime>
                         <os>windows</os>
                         <javaVersion>21</javaVersion>
